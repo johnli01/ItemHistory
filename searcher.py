@@ -6,15 +6,15 @@ from selenium.common.exceptions import TimeoutException
 import sys
 
 options = webdriver.ChromeOptions()
-options.add_argument("users-data-dri=C:\\Users\\johnl\\AppData\\Local\\"
-                     "Google\\Chrome\\User Data")
+options.add_argument("user-data-dir=C:\\Users\\johnl\\AppData\\Local\\"
+                     "Google\\Chrome\\User Data\\Default")
+options.add_argument("disable-infobars")
 driver = webdriver.Chrome("C:\\Program Files (x86)\\chromedriver.exe",
                           chrome_options=options)
-driver.get("https://www.bestbuy.com/site/apple-lightning-to-3-5mm-"
-           "headphone-adapter-white/5622278.p?skuId=5622278")
+driver.get("https://www.bestbuy.com/site/apple-airpods-with-charging-case-latest-model-white/6084400.p?skuId=6084400")
 
 # Add Item to Cart
-print('ADDING TO CART')
+print('1) ADDING TO CART')
 try:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((
         By.XPATH, "//*[contains(@class, 'btn btn-primary btn-lg btn-block "
@@ -24,14 +24,14 @@ try:
                                           "btn-block btn-leading-ficon "
                                           "add-to-cart-button')]")
     cursor.click()
-    print('FINISHED ADDING')
+    print('   FINISHED ADDING')
 except TimeoutException:
     print("Wait Timed Out on 'ADDING TO CART'")
     sys.exit
 
 
 # Go to Cart
-print('GOING TO CART')
+print('2) GOING TO CART')
 try:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((
         By.XPATH, "//*[contains(@class, 'btn btn-secondary "
@@ -40,13 +40,13 @@ try:
                                           "btn-secondary btn-sm btn-block ')]")
 
     cursor.click()
-    print('FINISHED GOING TO CART')
+    print('   FINISHED GOING TO CART')
 except TimeoutException:
     print("Wait Timed Out on 'GOING TO CART'")
     sys.exit
 
 # Checkout Item
-print('GOING TO CHECKOUT')
+print('3) GOING TO CHECKOUT')
 try:
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((
         By.XPATH, "//*[contains(@class, 'btn btn-lg btn-block "
@@ -54,7 +54,33 @@ try:
     cursor = driver.find_element_by_xpath("//*[contains(@class, 'btn btn-lg "
                                           "btn-block btn-primary')]")
     cursor.click()
-    print('FINISHED GOING TO CHECKOUT')
+    print('   FINISHED GOING TO CHECKOUT')
 except TimeoutException:
     print("Wait Timed Out on 'GOING TO CHECKOUT'")
     sys.exit
+
+# Inputting Number
+print('4) INPUTTING NUMBERS')
+try:
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((
+        By.XPATH, "//*[contains(@id, 'credit-card-cvv')]")))
+    cursor = driver.find_element_by_xpath("//*[contains(@id,"
+                                          "'credit-card-cvv')]")
+    cursor.send_keys('')
+    print('   FINISHED INPUTTING NUMBERS')
+except TimeoutException:
+    print("Wait Timed Out on 'INPUTTING VAL")
+    sys.exit
+
+# Place Order
+# btn btn-lg btn-block btn-primary button__fast-track
+# print('4) PLACING ORDER')
+# try:
+#     WebDriverWait(driver, 10).until(EC.presence_of_element_located((
+#         By.XPATH, "//*[contains(@class, 'btn btn-lg btn-block btn-primary button__fast-track')]")))
+#     cursor = driver.find_element_by_xpath("//*[contains(@class, 'btn btn-lg btn-block btn-primary button__fast-track')]"
+#     cursor.click()
+#     print('   FINISHED PLACING ORDER')
+# except TimeoutException:
+#     print("Wait Timed Out on 'PLACING ORDER")
+#     sys.exit
