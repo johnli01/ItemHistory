@@ -10,6 +10,7 @@ options.add_argument("disable-infobars")
 driver = webdriver.Chrome("C:\\Program Files (x86)\\chromedriver.exe",
                           chrome_options=options)
 driver.get("https://www.nvidia.com/en-us/shop/geforce/?page=1&limit=9&locale=en-us&search=RTX%203080")
+driver.minimize_window()
 
 # Program that checks availability of NVIDIA RTX 3080 FE cards
 try:
