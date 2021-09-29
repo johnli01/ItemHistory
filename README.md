@@ -1,5 +1,4 @@
-Utilizing Selenium for Web Scraping wanted items on the internet
+Project that tracks the average price of an item on Sub Reddit MechMarket
 
-Being able to:
-- Send Alerts of specified item
-- Purchase an item
+Uses the past 10 transactions to calcuate the average cost for current day
+Keeps track of each time the item is ran and displayed on a grid
