@@ -8,7 +8,6 @@ import requests
 import time
 
 api = PushshiftAPI()
-transaction_counter = 0
 
 # Converts Epoch time To Standard format
 def epochToReg(time):
@@ -34,18 +33,26 @@ def getData(item, start=regToEpoch(date.today()), end=regToEpoch(date.today()+re
 
 
 # Filters out buyers of specified item and saves seller listings
-def validData(listings):
+def validData(item, listings):
   filtered = []
   for listing in listings:
     title = listing['title']
     try:
-      if title[title.index("[H]"):title.index("[W]")]:
-        filtered.append(listing)
+      selling = title[title.index("[H]"):title.index("[W]")]
+      if item.lower() in selling.lower():
+        undesired_items = ['deskmat', 'spacebar', 'coiled', 'cable', 'clone', 'extension']
+        selling = selling.lower().split(" ")
+        last_word_item = item.split(" ")
+        last_word_item = last_word_item[len(last_word_item) - 1].lower()
+        next_word = selling[selling.index(last_word_item) + 1]
+        if not any(x in next_word for x in undesired_items):
+          filtered.append(listing)
     except ValueError:
       continue
   return filtered
 
 
+# Extracts user, price, date, item from listing
 def getInfo(listing):
   text = listing['selftext']
 
@@ -53,9 +60,9 @@ def getInfo(listing):
 def main():
   item = input("Enter specific item to search for on /r/MechMarket: ")
   data = getData(item)
-  data = validData(data)
+  data = validData(item, data)
   for listing in data:
-    print(listing)
+    print(listing['title'])
 
 if __name__ == "__main__":
   main()
