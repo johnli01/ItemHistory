@@ -56,7 +56,7 @@ def validData(item, listings):
 
 
 # Extracts user, price, date, item from listing
-def extractInfo(listing):
+def extractInfo(listing, item):
   text = listing['selftext']
   section = text.lower().split()
 
@@ -71,9 +71,9 @@ def main():
   item = input("Enter specific item to search for on /r/MechMarket: ")
   data = getData(item)
   data = validData(item, data)
-  
+
   for listing in data:
-    extractInfo(listing)
+    extractInfo(listing, item)
 
 if __name__ == "__main__":
   main()
