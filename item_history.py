@@ -41,28 +41,39 @@ def validData(item, listings):
       selling = title[title.index("[H]"):title.index("[W]")]
       if item.lower() in selling.lower():
         undesired_items = ['deskmat', 'spacebar', 'coiled', 'cable', 'clone', 'extension']
-        selling = selling.lower().split(" ")
-        last_word_item = item.split(" ")
+        selling = selling.lower().split()
+        last_word_item = item.split()
         last_word_item = last_word_item[len(last_word_item) - 1].lower()
-        next_word = selling[selling.index(last_word_item) + 1]
-        if not any(x in next_word for x in undesired_items):
+        if selling.index(last_word_item) + 1 >= len(selling):
           filtered.append(listing)
+        else:
+          next_word = selling[selling.index(last_word_item) + 1]
+          if not any(x in next_word for x in undesired_items):
+            filtered.append(listing)
     except ValueError:
       continue
   return filtered
 
 
 # Extracts user, price, date, item from listing
-def getInfo(listing):
+def extractInfo(listing):
   text = listing['selftext']
+  section = text.lower().split()
+
+  start = section.index("darling")
+  filtered = [word[start] for word in section]
+  print(section)
+  print(filtered)
+
 
 
 def main():
   item = input("Enter specific item to search for on /r/MechMarket: ")
   data = getData(item)
   data = validData(item, data)
+  
   for listing in data:
-    print(listing['title'])
+    extractInfo(listing)
 
 if __name__ == "__main__":
   main()
